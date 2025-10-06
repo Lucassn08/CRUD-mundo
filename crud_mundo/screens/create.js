@@ -1,8 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import deletescreen from './delete';
-import readscreen from './read';
-import updatescreen from './update';
+
 import styles from './../styles';
 import {
   Text,
@@ -13,8 +9,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useState } from 'react';
-
-const Drawer = createDrawerNavigator();
 
 export default function App() {
   // cria as variáveis (states)

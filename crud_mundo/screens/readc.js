@@ -13,9 +13,8 @@ import { useState } from 'react';
 export default function App() {
   // cria as variáveis (states)
   const [nome, setNome] = useState('');
-  const [continente, setContinente] = useState('');
   const [populacao, setPopulacao] = useState('');
-  const [idioma, setIdioma] = useState('');
+  const [pais, setPais] = useState('');
   
   // função executada quando botão Logar é selecionado
   const onPressCadastrar = () => {
@@ -33,9 +32,9 @@ export default function App() {
 
 const content = (styles) =>(
       <View style={styles.container}>
-        <Image style={styles.logo} source={require('./../assets/terra.jpg')} />
+        <Image style={styles.logo} source={require('../assets/cidade.jpg')} />
 
-        <Text style={styles.title}> atualizar dados de países </Text>
+        <Text style={styles.title}> Consulta de cidades </Text>
         
         <TextInput
           style={styles.input}
@@ -44,33 +43,12 @@ const content = (styles) =>(
           value={nome}
           onChangeText={setNome}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="continente"
-          placeholderTextColor="#C0C0C0"
-          value={continente}
-          onChangeText={setContinente}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="população"
-          placeholderTextColor="#C0C0C0"
-          value={populacao}
-          onChangeText={setPopulacao}
-          keyboardType= 'numeric'
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="idioma"
-          placeholderTextColor="#C0C0C0"
-          value={idioma}
-          onChangeText={setIdioma}
-        />
+        
         
         
         <View style={{ marginTop: 20, alignItems:'center'}}>
           <TouchableOpacity onPress={onPressCadastrar} style={styles.button}>
-            <Text style={styles.buttonText}>atualizar</Text>
+            <Text style={styles.buttonText}>buscar</Text>
           </TouchableOpacity>
         </View>
       </View>

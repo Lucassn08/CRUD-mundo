@@ -10,12 +10,13 @@ import {
 } from 'react-native';
 import { useState } from 'react';
 
+
+
 export default function App() {
   // cria as variáveis (states)
   const [nome, setNome] = useState('');
-  const [continente, setContinente] = useState('');
   const [populacao, setPopulacao] = useState('');
-  const [idioma, setIdioma] = useState('');
+  const [pais, setPais] = useState('');
   
   // função executada quando botão Logar é selecionado
   const onPressCadastrar = () => {
@@ -33,9 +34,9 @@ export default function App() {
 
 const content = (styles) =>(
       <View style={styles.container}>
-        <Image style={styles.logo} source={require('./../assets/terra.jpg')} />
+        <Image style={styles.logo} source={require('../assets/cidade.jpg')} />
 
-        <Text style={styles.title}> atualizar dados de países </Text>
+        <Text style={styles.title}> Atualizar dados de cidades </Text>
         
         <TextInput
           style={styles.input}
@@ -43,13 +44,6 @@ const content = (styles) =>(
           placeholderTextColor="#C0C0C0"
           value={nome}
           onChangeText={setNome}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="continente"
-          placeholderTextColor="#C0C0C0"
-          value={continente}
-          onChangeText={setContinente}
         />
         <TextInput
           style={styles.input}
@@ -61,10 +55,10 @@ const content = (styles) =>(
         />
         <TextInput
           style={styles.input}
-          placeholder="idioma"
+          placeholder="pais"
           placeholderTextColor="#C0C0C0"
-          value={idioma}
-          onChangeText={setIdioma}
+          value={pais}
+          onChangeText={setPais}
         />
         
         

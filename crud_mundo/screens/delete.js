@@ -1,6 +1,4 @@
-import deletescreen from './delete';
-import readscreen from './read';
-import updatescreen from './update';
+
 import styles from './../styles';
 import {
   Text,
@@ -46,33 +44,12 @@ const content = (styles) =>(
           value={nome}
           onChangeText={setNome}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="continente"
-          placeholderTextColor="#C0C0C0"
-          value={continente}
-          onChangeText={setContinente}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="população"
-          placeholderTextColor="#C0C0C0"
-          value={populacao}
-          onChangeText={setPopulacao}
-          keyboardType= 'numeric'
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="idioma"
-          placeholderTextColor="#C0C0C0"
-          value={idioma}
-          onChangeText={setIdioma}
-        />
+        
         
         
         <View style={{ marginTop: 20, alignItems:'center'}}>
           <TouchableOpacity onPress={onPressCadastrar} style={styles.button}>
-            <Text style={styles.buttonText}>Deletar</Text>
+            <Text style={styles.buttonText}>apagar</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -3,6 +3,12 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import deletescreen from './screens/delete';
 import readscreen from './screens/read';
 import updatescreen from './screens/update';
+import createscreen from './screens/create';
+import deletecscreen from './screens/deletec';
+import readcscreen from './screens/readc';
+import updatecscreen from './screens/updatec';
+import createcscreen from './screens/createc';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import {
   Text,
@@ -17,72 +23,58 @@ import { useState } from 'react';
 const Drawer = createDrawerNavigator();
 
 export default function App() {
-  // cria as variáveis (states)
-  const [nome, setNome] = useState('');
-  const [continente, setContinente] = useState('');
-  const [populacao, setPopulacao] = useState('');
-  const [idioma, setIdioma] = useState('');
+    return(
   
-  // função executada quando botão Logar é selecionado
-  const onPressCadastrar = () => {
-    if (nome != '' || continente != ''  || populacao != ''  || idioma != '' ) {
-      alert('dados enviados');
-    } else {
-      alert('ha dados faltantes');
-    }
-  };
+      <NavigationContainer>
+              
+            <Drawer.Navigator initialRouteName="cadastro_paises"
+            screenOptions={({ route }) => ({
+                drawerIcon: ({ color, size }) => {
+                  let iconName: string = '';
 
-  // função executada quando botão Logar é selecionado
-  const onPressButtonMostrarSenha = () => {
-    setMostrarSenha(!mostrarSenha);
-  };
-
-const content = (styles) =>(
-      <View style={styles.container}>
-        <Image style={styles.logo} source={require('./assets/terra.jpg')} />
-
-        <Text style={styles.title}> Cadastro de países </Text>
-        
-        <TextInput
-          style={styles.input}
-          placeholder="nome"
-          placeholderTextColor="#C0C0C0"
-          value={nome}
-          onChangeText={setNome}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="continente"
-          placeholderTextColor="#C0C0C0"
-          value={continente}
-          onChangeText={setContinente}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="população"
-          placeholderTextColor="#C0C0C0"
-          value={populacao}
-          onChangeText={setPopulacao}
-          keyboardType= 'numeric'
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="idioma"
-          placeholderTextColor="#C0C0C0"
-          value={idioma}
-          onChangeText={setIdioma}
-        />
-        
-        
-        <View style={{ marginTop: 20, alignItems:'center'}}>
-          <TouchableOpacity onPress={onPressCadastrar} style={styles.button}>
-            <Text style={styles.buttonText}>cadastrar</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    )
-
-    return content(styles);
+                  switch (route.name) {
+                    case 'cadastro_paises':
+                      iconName = 'home';
+                      break;
+                    case 'apagar_paises':
+                      iconName = 'home';
+                      break;
+                    case 'consultar_paises':
+                      iconName = 'person';
+                      break;
+                    case 'atualizar_paises':
+                      iconName = 'heart';
+                      break;
+                    case 'cadastro_cidades':
+                      iconName = 'home';
+                      break;
+                    case 'apagar_cidades':
+                      iconName = 'home';
+                      break;
+                    case 'consultar_cidades':
+                      iconName = 'person';
+                      break;
+                    case 'atualizar_cidades':
+                      iconName = 'heart';
+                      break;
+                  }
+                return <Ionicons name={iconName} size={size} color={color} />;
+                },
+            })}
+                >
+            <Drawer.Screen name="cadastro_paises" component={createscreen} />
+            <Drawer.Screen name="apagar_paises" component={deletescreen} />
+            <Drawer.Screen name="consultar_paises" component={readscreen} />
+            <Drawer.Screen name="atualizar_paises" component={updatescreen} />
+            <Drawer.Screen name="cadastro_cidades" component={createcscreen} />
+            <Drawer.Screen name="apagar_cidades" component={deletecscreen} />
+            <Drawer.Screen name="consultar_cidades" component={readcscreen} />
+            <Drawer.Screen name="atualizar_cidades" component={updatecscreen} />
+            
+        </Drawer.Navigator>
+      </NavigationContainer>
+            )
+    
     
 
 }
