@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* header */
+header {
+	background: linear-gradient(90deg, #1a3c5d, #102235);
+	color: white;
+	padding: 20px 0;
+	text-align: center;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    padding-left: 30px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #eef1f5;
+    color: #2c3e50;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* conteúdo central */
+main {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 40px;
+    flex: 1;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+h1, h2 {
+    color: #1a3c5d;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+h2 {
+    margin-top: 40px;
+    font-size: 24px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+/* Países */
+.country-card-row {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.country-card-collumn {
+    justify-content: space-between;
+    gap: 20px;
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.country-info {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.country-info strong {
+    color: #34495e;
+}
+
+/* Tabela de países */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fafafa;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #1a3c5d;
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Botões */
+input[type="submit"],
+input[type="button"] {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background-color: #1a5f8a;
+}
+
+/* Formulário */
+.form {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    margin-top: 40px;
+}
+
+/* Mensagem */
+p {
+    background-color: #b4d1f1c2;
+    color: #0a1927;
+    border-left: 4px solid #26527e;
+    padding: 12px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    border-radius: 4px;
+}
+
+/* Links */
+a {
+    color: #cce9fd;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Destaque */
+.highlight {
+    background-color: #2980b9;
+    color: #000;
+    font-weight: bold;
+    border: 2px solid #26527e;
+}
+
+/* Estilo do rodapé */
+footer {
+	text-align: center;
+	padding: 15px 0;
+	background: linear-gradient(90deg, #1a3c5d, #102235);;
+	color: white;
+	position: relative;
+	bottom: 0;
+	width: 100%;
+	margin-top: 20px;
+}
+
+/* Duas colunas */
+.admin-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+/* CRUD */
+.form-container {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+}
+
+/* Tabela de países */
+.table-container {
+    flex: 2;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #1a3c5d;
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+/* Estilo dos botões */
+input[type="button"] {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="button"]:hover {
+    background-color: #45a049;
+}
