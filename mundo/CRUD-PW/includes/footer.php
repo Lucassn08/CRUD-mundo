@@ -1,6 +1,6 @@
 <!-- includes/footer.php -->
 <footer>
-  CRUD - Desenvolvido por Luan Carvalho.
+  Desenvolvido por Lucas Salmazzo em 2025. :3
 </footer>
 </body>
 

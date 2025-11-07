@@ -13,6 +13,6 @@
 <body>
   <header>
         <a href="index.php">Home</a>
-        <a href="cidades.php">Gerenciar Cidades</a>
-        <a href="admin.php">Gerenciar Países</a>
+        <a href="cidades.php">CRUD Cidades</a>
+        <a href="admin.php">CRUD Países</a>
   </header>

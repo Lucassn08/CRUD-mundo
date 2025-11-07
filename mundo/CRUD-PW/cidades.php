@@ -2,29 +2,29 @@
 session_start();
 include_once("connect.php");
 
-if (!isset($_SESSION["adm"])) {
-    header("location: login.php");
-    exit();
-}
+$sql = "SELECT c.cd_cidade, c.nome AS cidade, c.populacao, p.nome AS pais 
+                                FROM tb_cidades c
+                                JOIN tb_paises p ON c.id_pais = p.cd_pais
+                                ORDER BY c.cd_cidade";
 
 $destacarCidade = null;
 
 // Pega os países para o select
-$paises = $con->query("SELECT id_pais, nome FROM paises ORDER BY nome");
+$paises = $con->query("SELECT cd_pais, nome FROM tb_paises ORDER BY nome");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = $_POST['acao'] ?? '';
-    $id_cidade = $_POST['id_cidade'] ?? '';
     $nome = trim($_POST['nome'] ?? '');
     $populacao = $_POST['populacao'] ?? '';
-    $pais_id = $_POST['pais_id'] ?? '';
+    $pais_id = $_POST['id_pais'] ?? '';
 
     switch ($acao) {
         case 'c': // CREATE
             if (empty($nome) || empty($populacao) || empty($pais_id)) {
                 $_SESSION["aviso"] = "Todos os campos devem ser preenchidos!";
             } else {
-                $stmt = $con->prepare("INSERT INTO cidades (nome, populacao, pais_id) VALUES (?, ?, ?)");
+                
+                $stmt = $con->prepare("INSERT INTO tb_cidades (nome, populacao, id_pais) VALUES (?, ?, ?)");
                 $stmt->bind_param("sii", $nome, $populacao, $pais_id);
 
                 if ($stmt->execute()) {
@@ -38,11 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
 
         case 'u': // UPDATE
-            if (empty($id_cidade) || empty($nome) || empty($populacao) || empty($pais_id)) {
+            if (empty($nome) || empty($populacao) || empty($pais_id)) {
                 $_SESSION["aviso"] = "Todos os campos devem ser preenchidos!";
             } else {
-                $stmt = $con->prepare("UPDATE cidades SET nome=?, populacao=?, pais_id=? WHERE id_cidade=?");
-                $stmt->bind_param("siii", $nome, $populacao, $pais_id, $id_cidade);
+                $stmt = $con->prepare("UPDATE tb_cidades SET nome=?, populacao=?, id_pais=? WHERE nome=?");
+                $stmt->bind_param("siis", $nome, $populacao, $pais_id, $nome);
 
                 if ($stmt->execute()) {
                     $_SESSION["aviso"] = "Cidade atualizada com sucesso!";
@@ -55,9 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
 
         case 'd': // DELETE
-            if (!empty($id_cidade)) {
-                $stmt = $con->prepare("DELETE FROM cidades WHERE id_cidade = ?");
-                $stmt->bind_param("i", $id_cidade);
+            if (!empty($nome)) {
+                $stmt = $con->prepare("DELETE FROM tb_cidades WHERE nome = ?");
+                $stmt->bind_param("s", $nome);
                 if ($stmt->execute()) {
                     $_SESSION["aviso"] = "Cidade excluída com sucesso.";
                 } else {
@@ -65,15 +65,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 $stmt->close();
             } else {
-                $_SESSION["aviso"] = "ID da cidade não informado para exclusão.";
+                $_SESSION["aviso"] = "nome da cidade não informado para exclusão.";
             }
             header("Location: cidades.php");
             exit();
 
         case 'r': // READ
-            if (!empty($id_cidade)) {
-                $stmt = $con->prepare("SELECT * FROM cidades WHERE id_cidade = ?");
-                $stmt->bind_param("i", $id_cidade);
+            if (!empty($nome)) {
+                $sql = "SELECT c.cd_cidade, c.nome AS cidade, c.populacao, p.nome AS pais 
+                                FROM tb_cidades c
+                                JOIN tb_paises p ON c.id_pais = p.cd_pais
+                                WHERE c.nome = '".$nome."'
+                                ORDER BY c.cd_cidade";
+                $stmt = $con->prepare("SELECT * FROM tb_cidades WHERE nome = ?");
+                $stmt->bind_param("s", $nome);
                 $stmt->execute();
                 $res = $stmt->get_result();
 
@@ -85,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 $stmt->close();
             } else {
-                $_SESSION["aviso"] = "ID da cidade não fornecido!";
+                $_SESSION["aviso"] = "nome da cidade não fornecido!";
             }
             break;
     }
@@ -104,24 +109,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include('includes/header_adm.php'); ?>
 
 <main>
-    <h1>Painel de Cidades</h1>
-
     <div class="admin-container">
         <div class="form-container">
             <h2>Gerenciar Cidades</h2>
             <form id="f" method="post" action="cidades.php">
-                <input type="number" name="id_cidade" placeholder="ID da Cidade" value="<?php echo $destacarCidade['id_cidade'] ?? ''; ?>"><br>
                 <input type="text" name="nome" placeholder="Nome da Cidade" value="<?php echo htmlspecialchars($destacarCidade['nome'] ?? ''); ?>"><br>
                 <input type="number" name="populacao" placeholder="População" value="<?php echo $destacarCidade['populacao'] ?? ''; ?>"><br>
 
-                <select name="pais_id" required>
+                <select name="id_pais" required>
                     <option value="">Selecione o País</option>
                     <?php
-                    $paises = $con->query("SELECT id_pais, nome FROM paises ORDER BY nome");
+                    $paises = $con->query("SELECT cd_pais, nome FROM tb_paises ORDER BY nome");
                     if ($paises && $paises->num_rows > 0) {
                         while ($pais = $paises->fetch_assoc()) {
-                            $selected = ($destacarCidade && $pais['id_pais'] == $destacarCidade['pais_id']) ? 'selected' : '';
-                            echo "<option value='{$pais['id_pais']}' $selected>{$pais['nome']}</option>";
+                            $selected = ($destacarCidade && $pais['cd_pais'] == $destacarCidade['id_pais']) ? 'selected' : '';
+                            echo "<option value='{$pais['cd_pais']}' $selected>{$pais['nome']}</option>";
                         }
                     }
                     ?>
@@ -139,10 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="table-container">
             <h2>Cidades Cadastradas</h2>
             <?php
-            $res = $con->query("SELECT c.id_cidade, c.nome AS cidade, c.populacao, p.nome AS pais 
-                                FROM cidades c
-                                JOIN paises p ON c.pais_id = p.id_pais
-                                ORDER BY c.nome");
+            $res = $con->query($sql);
 
             if ($res && $res->num_rows > 0) {
                 echo "<table>";
@@ -154,9 +153,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 echo "<tr><th>ID</th><th>Nome</th><th>População</th><th>País</th></tr>";
                 while ($campo = $res->fetch_assoc()) {
-                    $highlight = ($destacarCidade && $campo['id_cidade'] == $destacarCidade['id_cidade']) ? 'class="highlight"' : '';
+                    $highlight = ($destacarCidade && $campo['cd_cidade'] == $destacarCidade['cd_cidade']) ? 'class="highlight"' : '';
                     echo "<tr $highlight>";
-                    echo "<td>{$campo['id_cidade']}</td>";
+                    echo "<td>{$campo['cd_cidade']}</td>";
                     echo "<td>" . htmlspecialchars($campo['cidade']) . "</td>";
                     echo "<td>" . number_format($campo['populacao']) . "</td>";
                     echo "<td>" . htmlspecialchars($campo['pais']) . "</td>";
@@ -170,13 +169,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <br>
-    <a href="admin.php">Voltar</a>
+    
 </main>
 
-<footer>
-    Loja Virtual - Desenvolvido por Luan Carvalho
-</footer>
+ <?php include('includes/footer.php'); ?>
 
 <script>
     function submeterForm(acao) {
