@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2>Gerenciar Cidades</h2>
             <form id="f" method="post" action="cidades.php">
                 <input type="text" name="nome" placeholder="Nome da Cidade" value="<?php echo htmlspecialchars($destacarCidade['nome'] ?? ''); ?>"><br>
-                <input type="number" name="populacao" placeholder="População" value="<?php echo $destacarCidade['populacao'] ?? ''; ?>"><br>
+                <input type="number" name="populacao" min = "1" placeholder="População" value="<?php echo $destacarCidade['populacao'] ?? ''; ?>"><br>
 
                 <select name="id_pais" required>
                     <option value="">Selecione o País</option>

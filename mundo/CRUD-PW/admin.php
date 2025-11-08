@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2>Gerenciar Países</h2>
             <form id="f" method="post" action="admin.php">
                 <input type="text" name="nome" placeholder="Nome do País" required value ="<?php echo htmlspecialchars($destacarPais['nome'] ?? ''); ?>"><br>
-                <input type="number" name="populacao" placeholder="População" required value ="<?php echo $destacarPais['populacao'] ?? ''; ?>"><br>
+                <input type="number" name="populacao" min = "1" placeholder="População" required value ="<?php echo $destacarPais['populacao'] ?? ''; ?>"><br>
                 <input type="text" name="idioma" placeholder="Idioma" required value ="<?php echo $destacarPais['idioma'] ?? ''; ?>"><br>
                 <input type="hidden" name="acao" id="acao"><br>
                 <select name ="continente" required>
